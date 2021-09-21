@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/CriminalIntent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GeoQuiz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RSShool2021-Android-task-Pomodoro" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RetrofitTest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Storage-Part-2-Example" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TestGitHub" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/navigation/CriminalIntent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/navigation/rsandroidtask4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/review/RSShool2021-Android-task-Pomodoro" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rsandroidtask4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rsschool2021-Android-task-quiz" vcs="Git" />
+  </component>
+</project>
