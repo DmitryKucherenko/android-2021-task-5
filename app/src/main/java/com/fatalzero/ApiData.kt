@@ -5,11 +5,14 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ApiData(
-    @Json(name = "autor") val autor:String,
-    @Json(name = "books") val books:List<Book>
+    @Json(name = "cats") val cats:List<Cat>
 )
 
 
 @JsonClass(generateAdapter = true)
-class Book(@Json(name = "id") val id:Int,
-           @Json(name="title") val title:String)
+class Cat(
+    @Json(name = "id") val id:String,
+    @Json(name = "url") val url:String,
+    @Json(name = "width") val width:String,
+    @Json(name = "height") val height:String
+)

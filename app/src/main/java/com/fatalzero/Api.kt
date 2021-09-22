@@ -8,27 +8,25 @@ import retrofit2.http.GET
 
 interface Api {
 
-    @GET("/book")
+    @GET("/v1/images/search?limit=5&page=10&order=Desc")
     suspend fun getBooks():ApiData
 }
 
-object ApiDateImpl{
+object ApiDateImpl {
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
-        .baseUrl("http://10.0.2.2:3000")
+        .baseUrl("https://api.thecatapi.com")
         .build()
 
     private val booksService = retrofit.create(Api::class.java)
 
 
-    suspend fun getBooks(): List<String?> {
+    suspend fun getBooks(): List<Cat?> {
         return withContext(Dispatchers.IO) {
-            booksService.getBooks().books
-                .map{
-                        result -> result.title
-                }
-
+            booksService.getBooks().cats.map{
+                cat ->  Cat(cat.id,cat.url,cat.height,cat.width)
+            }
         }
-    }
 
+    }
 }
