@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fatalzero.R
+import com.fatalzero.adapter.CatAdapter
 
 class CatsListFragment : Fragment() {
+    private var adapter: CatAdapter? = null
 
     companion object {
         fun newInstance() = CatsListFragment()
