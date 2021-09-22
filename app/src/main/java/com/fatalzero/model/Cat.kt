@@ -1,4 +1,4 @@
-package com.fatalzero
+package com.fatalzero.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

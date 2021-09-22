@@ -1,7 +1,9 @@
-package com.fatalzero
+package com.fatalzero.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.fatalzero.ApiDateImpl
+import com.fatalzero.R
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {

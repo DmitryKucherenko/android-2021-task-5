@@ -1,5 +1,6 @@
 package com.fatalzero
 
+import com.fatalzero.model.Cat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
