@@ -8,8 +8,8 @@ import retrofit2.http.GET
 
 interface Api {
 
-    @GET("/v1/images/search?limit=5&page=10&order=Desc")
-    suspend fun getBooks():ApiData
+    @GET("/v1/images/search?limit=2&page=1&order=Desc")
+    suspend fun getBooks():List<Cat>
 }
 
 object ApiDateImpl {
@@ -23,7 +23,7 @@ object ApiDateImpl {
 
     suspend fun getBooks(): List<Cat?> {
         return withContext(Dispatchers.IO) {
-            booksService.getBooks().cats.map{
+            booksService.getBooks().map{
                 cat ->  Cat(cat.id,cat.url,cat.height,cat.width)
             }
         }
