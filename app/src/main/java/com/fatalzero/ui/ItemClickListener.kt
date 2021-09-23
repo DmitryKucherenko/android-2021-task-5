@@ -1,5 +1,5 @@
 package com.fatalzero.ui
 
 interface ItemClickListener {
-    fun onItemClick(id: Int)
+    fun onItemClick(url: String?)
 }

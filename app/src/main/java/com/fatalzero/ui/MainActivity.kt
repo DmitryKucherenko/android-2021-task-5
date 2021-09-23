@@ -2,16 +2,31 @@ package com.fatalzero.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.fatalzero.ApiDateImpl
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.fatalzero.R
-import kotlinx.coroutines.runBlocking
 
-class MainActivity : AppCompatActivity() {
+private const val URL = "url"
+
+class MainActivity : AppCompatActivity(), ItemClickListener {
+    private var navController: NavController? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        runBlocking {
-          ApiDateImpl.getBooks().forEach{println(it)}
-        }
+        navController = this.findNavController(R.id.fragment_container)
+//        runBlocking {
+//            ApiDateImpl.getCats().forEach{println(it)}
+//        }
+    }
+
+     fun openListFragment() {
+        navController?.popBackStack()
+    }
+
+
+    override fun onItemClick(url: String?) {
+        navController?.navigate(R.id.action_catsListFragment_to_catInfoFragment  , bundleOf(URL to url))
     }
 }

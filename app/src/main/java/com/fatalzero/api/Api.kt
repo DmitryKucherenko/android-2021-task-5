@@ -9,7 +9,7 @@ import retrofit2.http.GET
 
 interface Api {
 
-    @GET("/v1/images/search?limit=2&page=1&order=Desc")
+    @GET("/v1/images/search?limit=10&page=1&order=Desc")
     suspend fun getBooks():List<Cat>
 }
 
@@ -22,7 +22,7 @@ object ApiDateImpl {
     private val booksService = retrofit.create(Api::class.java)
 
 
-    suspend fun getBooks(): List<Cat?> {
+    suspend fun getCats(): List<Cat?> {
         return withContext(Dispatchers.IO) {
             booksService.getBooks().map{
                 cat ->  Cat(cat.id,cat.url,cat.height,cat.width)

@@ -11,12 +11,12 @@
         android:label="cats_list_fragment"
         tools:layout="@layout/cats_list_fragment" >
         <action
-            android:id="@+id/action_catsListFragment_to_catFragment"
-            app:destination="@id/catFragment" />
+            android:id="@+id/action_catsListFragment_to_catInfoFragment"
+            app:destination="@id/catInfoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/catFragment"
-        android:name="com.fatalzero.ui.CatFragment"
-        android:label="cat_fragment"
-        tools:layout="@layout/cat_fragment" />
+        android:id="@+id/catInfoFragment"
+        android:name="com.fatalzero.ui.CatInfoFragment"
+        android:label="cat_info"
+        tools:layout="@layout/cat_info" />
 </navigation>
