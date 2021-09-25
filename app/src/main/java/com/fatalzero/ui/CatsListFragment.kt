@@ -15,7 +15,7 @@ import com.fatalzero.databinding.CatsListFragmentBinding
 class CatsListFragment : Fragment() {
     private var adapter: CatAdapter? = null
     private  var catsRecyclerView: RecyclerView? = null
-     val viewModel:CatsListViewModel by viewModels()
+     private val viewModel:CatsListViewModel by viewModels()
     private var _binding: CatsListFragmentBinding? = null
     private val binding get() = _binding!!
     private var itemClickListener: ItemClickListener? = null
@@ -28,7 +28,7 @@ class CatsListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = CatsListFragmentBinding.inflate(inflater, container, false)
         catsRecyclerView = binding.catsRecyclerView
         catsRecyclerView?.layoutManager = LinearLayoutManager(context)
@@ -42,9 +42,7 @@ class CatsListFragment : Fragment() {
         viewModel.catsList.observe(viewLifecycleOwner,
             { cats ->
                 cats?.let {
-                    println("TO ADATER ${it.size}")
                     adapter?.submitList(it)
-
                 }
             })
     }

@@ -12,7 +12,11 @@
         tools:layout="@layout/cats_list_fragment" >
         <action
             android:id="@+id/action_catsListFragment_to_catInfoFragment"
-            app:destination="@id/catInfoFragment" />
+            app:destination="@id/catInfoFragment"
+            app:enterAnim="@anim/flip_left_in"
+            app:exitAnim="@anim/flip_left_out"
+            app:popEnterAnim="@anim/flip_right_in"
+            app:popExitAnim="@anim/flip_right_out" />
     </fragment>
     <fragment
         android:id="@+id/catInfoFragment"

@@ -1,4 +1,4 @@
-package com.fatalzero
+package com.fatalzero.api
 
 import com.fatalzero.model.Cat
 import kotlinx.coroutines.Dispatchers
@@ -7,10 +7,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
+
 interface Api {
 
     @GET("/v1/images/search?limit=10&page=1&order=Desc")
-    suspend fun getBooks():List<Cat>
+    suspend fun getCats():List<Cat>
+
+
 }
 
 object ApiDateImpl {
@@ -24,10 +27,11 @@ object ApiDateImpl {
 
     suspend fun getCats(): List<Cat?> {
         return withContext(Dispatchers.IO) {
-            booksService.getBooks().map{
+            booksService.getCats().map{
                 cat ->  Cat(cat.id,cat.url,cat.height,cat.width)
             }
         }
 
     }
+
 }

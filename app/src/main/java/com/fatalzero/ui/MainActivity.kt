@@ -16,14 +16,8 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navController = this.findNavController(R.id.fragment_container)
-//        runBlocking {
-//            ApiDateImpl.getCats().forEach{println(it)}
-//        }
     }
 
-     fun openListFragment() {
-        navController?.popBackStack()
-    }
 
 
     override fun onItemClick(url: String?) {
