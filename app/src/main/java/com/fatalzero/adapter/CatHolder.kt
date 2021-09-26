@@ -22,22 +22,18 @@ class CatHolder(
     private var cat: Cat? = null
     private val catImageView = binding.imageView
 
-
-
-    fun bind(cat: Cat) {
+    fun bind(cat: Cat?) {
         this.cat = cat
 
         Glide.with(context)
-            .load(cat.url)
+            .load(cat?.url)
             .placeholder(R.drawable.ic_cat_empty)
             .optionalTransform(CenterCrop())
             .into(catImageView)
 
-        itemView.setOnClickListener{
-            itemClickListener?.onItemClick(cat.url)
+        itemView.setOnClickListener {
+            itemClickListener?.onItemClick(cat?.url)
         }
-
-
 
 
     }

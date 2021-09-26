@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">android-2021-task-5</string>
+    <string name="button_retry">Retry</string>
+    <string name="label_error">Something went wrong, please try again</string>
 </resources>

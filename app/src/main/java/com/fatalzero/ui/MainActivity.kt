@@ -9,7 +9,7 @@ import com.fatalzero.R
 
 private const val URL = "url"
 
-class MainActivity : AppCompatActivity(), ItemClickListener {
+class MainActivity : AppCompatActivity(), ItemClickListener,CatInfoFragment.Calback {
     private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,5 +22,10 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
 
     override fun onItemClick(url: String?) {
         navController?.navigate(R.id.action_catsListFragment_to_catInfoFragment  , bundleOf(URL to url))
+
+    }
+
+    override fun openListFragment() {
+        navController?.popBackStack()
     }
 }

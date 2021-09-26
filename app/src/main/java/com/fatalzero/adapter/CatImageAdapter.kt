@@ -2,22 +2,26 @@ package com.fatalzero.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import com.fatalzero.databinding.CatItemBinding
 import com.fatalzero.model.Cat
 import com.fatalzero.ui.ItemClickListener
 
-class CatAdapter(private val itemClickListener: ItemClickListener?) : ListAdapter<Cat, CatHolder>(DiffCallback) {
+class CatImageAdapter(private val itemClickListener: ItemClickListener?) : PagingDataAdapter<Cat, CatHolder>(DiffCallback) {
+
+
+
+
+    override fun onBindViewHolder(holder: CatHolder, position: Int) {
+        val cat = getItem(position)
+
+            holder.bind(cat)
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = CatItemBinding.inflate(layoutInflater, parent, false)
         return CatHolder(itemClickListener, binding,parent.context)
     }
-
-    override fun onBindViewHolder(holder: CatHolder, position: Int) {
-        val car = currentList[position]
-        holder.bind(car)
-    }
-
-    override fun getItemCount()=currentList.size
 }

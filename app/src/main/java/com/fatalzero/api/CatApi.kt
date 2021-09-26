@@ -6,12 +6,13 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 interface Api {
 
     @GET("/v1/images/search?limit=10&page=1&order=Desc")
-    suspend fun getCats():List<Cat>
+    suspend fun getCats(@Query("limit") size: Int,@Query("page") page:Int ):List<Cat>
 
 
 }
@@ -22,16 +23,8 @@ object ApiDateImpl {
         .baseUrl("https://api.thecatapi.com")
         .build()
 
-    private val booksService = retrofit.create(Api::class.java)
+     val catService: Api = retrofit.create(Api::class.java)
 
 
-    suspend fun getCats(): List<Cat?> {
-        return withContext(Dispatchers.IO) {
-            booksService.getCats().map{
-                cat ->  Cat(cat.id,cat.url,cat.height,cat.width)
-            }
-        }
-
-    }
 
 }
