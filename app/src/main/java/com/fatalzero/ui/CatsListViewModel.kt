@@ -16,21 +16,10 @@ class CatsListViewModel : ViewModel() {
      var catsLiveData=
           repository.letCatImagesLiveData().cachedIn(viewModelScope)
 
-    //var catsLiveData: LiveData<PagingData<Cat>> =  repository.letCatImagesLiveData()
-     //var catsList: LiveData<List<Cat?>> = getLiveDataList()
-
-//    private suspend fun getList():List<Cat?>{
-//       return withContext(Dispatchers.IO){
-//           ApiDateImpl.getCats()
-//       }
-//    }
-
-//     private fun getLiveDataList(): LiveData<List<Cat?>>{
-//        return liveData {
-//            emit(getList())
-//        }
-//    }
-
-  // repository.letCatImagesLiveData()
+fun refresh(){
+    repository= CatImagesRepository()
+    catsLiveData=
+        repository.letCatImagesLiveData().cachedIn(viewModelScope)
+}
 
 }

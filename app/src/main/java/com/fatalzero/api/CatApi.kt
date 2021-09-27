@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface Api {
 
-    @GET("/v1/images/search?limit=10&page=1&order=Desc")
+    @GET("/v1/images/search")
     suspend fun getCats(@Query("limit") size: Int,@Query("page") page:Int ):List<Cat>
 
 
