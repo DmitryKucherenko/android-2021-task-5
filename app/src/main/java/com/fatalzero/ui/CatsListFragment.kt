@@ -26,20 +26,19 @@ import java.lang.Error
 private const val TAG = "CatList";
 
 class CatsListFragment : Fragment() {
-    private  var catsRecyclerView: RecyclerView? = null
-     private val viewModel:CatsListViewModel by viewModels()
+    private var catsRecyclerView: RecyclerView? = null
+    private val viewModel: CatsListViewModel by viewModels()
     private var _binding: CatsListFragmentBinding? = null
     private val binding get() = _binding!!
     private var itemClickListener: ItemClickListener? = null
-    private var adapter:CatImageAdapter? = null
-
+    private var adapter: CatImageAdapter? = null
+    private var emptyView: ViewGroup?=null
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         itemClickListener = context as ItemClickListener
     }
-
 
 
     override fun onCreateView(
@@ -50,58 +49,41 @@ class CatsListFragment : Fragment() {
         catsRecyclerView = binding.catsRecyclerView
         catsRecyclerView?.layoutManager = LinearLayoutManager(context)
         adapter = CatImageAdapter(itemClickListener)
-        val loaderStateAdapter = LoaderStateAdapter{adapter?.retry()}
-        catsRecyclerView?.adapter=adapter?.withLoadStateFooter(loaderStateAdapter)
-        binding.refreshButton.setOnClickListener{
-
-
-        }
+        val loaderStateAdapter = LoaderStateAdapter { adapter?.retry() }
+        catsRecyclerView?.adapter = adapter?.withLoadStateFooter(loaderStateAdapter)
+        emptyView = binding.emptyView
+        binding.refreshButton.setOnClickListener { adapter?.retry() }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG,"onViewCreated")
         viewModel.catsLiveData.observe(viewLifecycleOwner,
-                { cats ->
-
-                    if(cats==null) Log.d(TAG,"NE PRILETELO")
-                    cats?.let {
-
-                        lifecycleScope.launch {
-                            adapter?.submitData(it)
-
-                        }
+            { cats ->
+                cats?.let {
+                    lifecycleScope.launch {
+                        adapter?.submitData(it)
                     }
+                }
+            })
 
-                })
-
-        adapter?.addLoadStateListener {loadState ->
-            Log.d(TAG, loadState.refresh::class.qualifiedName.toString())
-     // if((loadState.refresh::class.qualifiedName!!)=="Error")
-            if(loadState.refresh is LoadState.Error)
-               if (adapter?.itemCount ?:0 < 1) {
-                   binding.catsRecyclerView.visibility = GONE
-                   binding.emptyView.visibility = VISIBLE
-               } else {
-                   binding.catsRecyclerView.visibility = VISIBLE
-                   binding.emptyView.visibility = GONE
-               }
-
+        adapter?.addLoadStateListener { loadState ->
+            if (adapter?.itemCount ?: 0 < 1 && loadState.refresh is LoadState.Error) {
+                catsRecyclerView?.visibility = GONE
+                emptyView?.visibility = VISIBLE
+            } else {
+                catsRecyclerView?.visibility = VISIBLE
+                emptyView?.visibility = GONE
+            }
         }
 
-
-        Log.d(TAG,"after onViewCreated")
-
-
     }
-    
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

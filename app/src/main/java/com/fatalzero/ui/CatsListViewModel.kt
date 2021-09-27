@@ -18,8 +18,9 @@ class CatsListViewModel : ViewModel() {
 
 fun refresh(){
     repository= CatImagesRepository()
-    catsLiveData=
-        repository.letCatImagesLiveData().cachedIn(viewModelScope)
+    catsLiveData.switchMap {
+        repository.letCatImagesLiveData()
+    }
 }
 
 }
