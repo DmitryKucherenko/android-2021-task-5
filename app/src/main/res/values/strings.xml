@@ -2,4 +2,6 @@
     <string name="app_name">android-2021-task-5</string>
     <string name="button_retry">Retry</string>
     <string name="label_error">Something went wrong, please try again</string>
+    <string name="nothing_here_check_internet">Nothing here! Check Internet!</string>
+    <string name="refresh">refresh</string>
 </resources>

@@ -17,7 +17,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.fatalzero.R
 import com.fatalzero.databinding.CatInfoBinding
@@ -29,7 +28,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.net.URL
 
 private const val FOLDER_NAME = "my_cat"
 private const val URL = "url"
@@ -43,7 +41,7 @@ class CatInfoFragment : Fragment() {
     private var calback:Calback? = null
 
 
-    private val infoViewModel: CatInfoViewModel by viewModels()
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,7 +55,7 @@ class CatInfoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = CatInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -66,7 +64,6 @@ class CatInfoFragment : Fragment() {
         super.onCreate(savedInstanceState)
         url = arguments?.getString(URL)
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,10 +71,11 @@ class CatInfoFragment : Fragment() {
 
         val catInfoImageView: ImageView = binding.imageView
         saveButton = binding.floatingActionButton
-         Glide.with(requireActivity())
+        Glide.with(requireActivity())
             .load(url)
             .placeholder(R.drawable.ic_cat_empty)
             .into(catInfoImageView)
+
 
         saveButton?.setOnClickListener {
             if (!isCallPermissionGranted()) requestCallPermissions()
@@ -98,9 +96,7 @@ class CatInfoFragment : Fragment() {
                 }
             }
             calback?.openListFragment()
-
         }
-
     }
 
 
@@ -129,9 +125,7 @@ class CatInfoFragment : Fragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
             galleryAddPic(savedImagePath)
-
         }
         return savedImagePath
     }

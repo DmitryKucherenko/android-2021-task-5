@@ -58,6 +58,7 @@ class CatsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.catsLiveData.observe(viewLifecycleOwner,
             { cats ->
                 cats?.let {
