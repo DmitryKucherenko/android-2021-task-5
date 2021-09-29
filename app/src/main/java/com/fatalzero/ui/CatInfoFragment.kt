@@ -27,10 +27,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.OutputStream
 
 private const val FOLDER_NAME = "my_cat"
 private const val URL = "url"
+private const val QUALITY = 100
+private const val CODE = 100
 
 class CatInfoFragment : Fragment() {
 
@@ -38,9 +41,7 @@ class CatInfoFragment : Fragment() {
     private var _binding: CatInfoBinding? = null
     private val binding get() = _binding!!
     private var saveButton: FloatingActionButton? = null
-    private var calback:Calback? = null
-
-
+    private var calback: Calback? = null
 
 
     override fun onAttach(context: Context) {
@@ -48,8 +49,8 @@ class CatInfoFragment : Fragment() {
         calback = context as Calback
     }
 
-    interface Calback{
-         fun openListFragment()
+    interface Calback {
+        fun openListFragment()
     }
 
     override fun onCreateView(
@@ -82,17 +83,22 @@ class CatInfoFragment : Fragment() {
             val fileName = File(url).name
             val folderName = FOLDER_NAME
             CoroutineScope(Dispatchers.IO).launch {
-                if(saveImage(
-                    Glide.with(requireActivity())
-                        .asBitmap()
-                        .load(url) // sample image
-                        .placeholder(android.R.drawable.progress_indeterminate_horizontal) // need placeholder to avoid issue like glide annotations
-                        .error(android.R.drawable.stat_notify_error) // need error to avoid issue like glide annotations
-                        .submit()
-                        .get(), fileName,folderName
+                if (saveImage(
+                        Glide.with(requireActivity())
+                            .asBitmap()
+                            .load(url) // sample image
+                            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+                            .error(android.R.drawable.stat_notify_error)
+                            .submit()
+                            .get(), fileName, folderName
 
-                )!=null)  withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "image $fileName saved to $folderName", Toast.LENGTH_LONG).show();
+                    ) != null
+                ) withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        requireContext(),
+                        "image $fileName saved to $folderName",
+                        Toast.LENGTH_LONG
+                    ).show();
                 }
             }
             calback?.openListFragment()
@@ -100,7 +106,7 @@ class CatInfoFragment : Fragment() {
     }
 
 
-    private  fun saveImage(
+    private fun saveImage(
         image: Bitmap,
         imageFileName: String,
         folderName: String = ""
@@ -120,9 +126,9 @@ class CatInfoFragment : Fragment() {
             savedImagePath = imageFile.getAbsolutePath()
             try {
                 val fOut: OutputStream = FileOutputStream(imageFile)
-                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
+                image.compress(Bitmap.CompressFormat.JPEG, QUALITY, fOut)
                 fOut.close()
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
             galleryAddPic(savedImagePath)
@@ -153,7 +159,7 @@ class CatInfoFragment : Fragment() {
         ActivityCompat.requestPermissions(
             requireActivity(),
             arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            100
+            CODE
         )
     }
 
