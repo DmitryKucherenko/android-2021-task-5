@@ -37,9 +37,7 @@ subprojects {
 detekt {
     toolVersion = "1.18.0"
     config = files("config/detekt/detekt.yml")
-    failFast = true
     autoCorrect = true
-
 
     input = files("app/src/main/java", "app/src/main/kotlin")
 

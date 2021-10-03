@@ -10,7 +10,6 @@ object DiffCallback : DiffUtil.ItemCallback<Cat>() {
     }
 
     override fun areContentsTheSame(oldItem: Cat, newItem: Cat): Boolean {
-        return oldItem==newItem
+        return oldItem == newItem
     }
-
 }

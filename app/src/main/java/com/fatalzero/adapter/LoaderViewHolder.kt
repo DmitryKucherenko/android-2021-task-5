@@ -1,6 +1,5 @@
 package com.fatalzero.adapter
 
-import android.content.Context
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
@@ -20,5 +19,4 @@ class LoaderViewHolder(binding: ItemCatLoaderBinding, var retry: () -> Unit) :
             motionLayout.transitionToStart()
         }
     }
-
 }

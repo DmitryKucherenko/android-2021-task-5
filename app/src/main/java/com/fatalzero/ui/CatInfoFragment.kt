@@ -1,11 +1,9 @@
 package com.fatalzero.ui
 
-
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -43,7 +41,6 @@ class CatInfoFragment : Fragment() {
     private var saveButton: FloatingActionButton? = null
     private var calback: Calback? = null
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         calback = context as Calback
@@ -54,17 +51,21 @@ class CatInfoFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = CatInfoBinding.inflate(inflater, container, false)
+        _binding = CatInfoBinding.inflate(
+            inflater,
+            container,
+            false
+        )
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         url = arguments?.getString(URL)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,7 +77,6 @@ class CatInfoFragment : Fragment() {
             .load(url)
             .placeholder(R.drawable.ic_cat_empty)
             .into(catInfoImageView)
-
 
         saveButton?.setOnClickListener {
             if (!isCallPermissionGranted()) requestCallPermissions()
@@ -98,13 +98,12 @@ class CatInfoFragment : Fragment() {
                         requireContext(),
                         "image $fileName saved to $folderName",
                         Toast.LENGTH_LONG
-                    ).show();
+                    ).show()
                 }
             }
             calback?.openListFragment()
         }
     }
-
 
     private fun saveImage(
         image: Bitmap,
@@ -146,13 +145,11 @@ class CatInfoFragment : Fragment() {
         }
     }
 
-
     private fun isCallPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
-
     }
 
     private fun requestCallPermissions() {
@@ -162,6 +159,4 @@ class CatInfoFragment : Fragment() {
             CODE
         )
     }
-
-
 }

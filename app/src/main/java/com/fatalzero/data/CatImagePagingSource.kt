@@ -13,7 +13,6 @@ class CatImagePagingSource(val catApiService: Api) : PagingSource<Int, Cat>() {
         return state.anchorPosition
     }
 
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Cat> {
         val page = params.key ?: 1
         return try {
@@ -24,7 +23,7 @@ class CatImagePagingSource(val catApiService: Api) : PagingSource<Int, Cat>() {
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)
-        } catch (exception: HttpException){
+        } catch (exception: HttpException) {
             return LoadResult.Error(exception)
         }
     }
