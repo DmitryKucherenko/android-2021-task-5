@@ -58,13 +58,10 @@ class CatInfoFragment : Fragment() {
 
         val catInfoImageView: ImageView = binding.imageView
         saveButton = binding.floatingActionButton
-
-        if (viewModel.glide == null) {
-            viewModel.glide = Glide.with(requireActivity())
-                .load(viewModel.url)
-                .placeholder(R.drawable.ic_cat_empty)
-        }
-        viewModel.glide?.into(catInfoImageView)
+        Glide.with(requireActivity())
+            .load(viewModel.url)
+            .placeholder(R.drawable.ic_cat_empty)
+            .into(catInfoImageView)
         saveButton?.setOnClickListener {
             if (isPermissionGranted()) {
                 viewModel.url?.let {
