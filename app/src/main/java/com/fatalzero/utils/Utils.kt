@@ -9,7 +9,7 @@ import android.widget.Toast
 private const val DELIMITER = "/"
 
 class Utils {
-    fun downloadImage(url: String, context: Context, filePath: String? =Environment.DIRECTORY_PICTURES) {
+    fun downloadImage(url: String, context: Context, filePath: String? = Environment.DIRECTORY_PICTURES) {
         val filename = url.substringAfterLast(DELIMITER)
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle(filename)
@@ -23,7 +23,5 @@ class Utils {
             "$filename was downloaded to $filePath",
             Toast.LENGTH_LONG
         ).show()
-
-
     }
 }

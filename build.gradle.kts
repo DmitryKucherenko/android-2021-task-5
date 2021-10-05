@@ -8,11 +8,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath ("com.android.tools.build:gradle:4.2.2")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("com.android.tools.build:gradle:4.2.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
-
 
 plugins {
     id("io.gitlab.arturbosch.detekt") version "1.18.1"
@@ -20,11 +19,10 @@ plugins {
 }
 
 subprojects {
-    apply (plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         debug.set(false)
     }
-
 }
 
 detekt {
@@ -51,12 +49,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-
     }
 }
 
-
-
-tasks.register(name = "type",type = Delete::class){
+tasks.register(name = "type", type = Delete::class) {
     delete(rootProject.buildDir)
 }

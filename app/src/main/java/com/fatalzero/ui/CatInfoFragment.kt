@@ -1,17 +1,12 @@
 package com.fatalzero.ui
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,34 +15,23 @@ import com.bumptech.glide.Glide
 import com.fatalzero.R
 import com.fatalzero.databinding.CatInfoBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
 
-private const val FOLDER_NAME = "my_cat"
 private const val URL = "url"
-private const val QUALITY = 100
 private const val CODE = 100
 
 class CatInfoFragment : Fragment() {
     private val viewModel: CatInfoViewModel by viewModels()
-    private var url: String? = null
     private var _binding: CatInfoBinding? = null
     private val binding get() = _binding!!
     private var saveButton: FloatingActionButton? = null
-    private var calback: Calback? = null
+    private var openListFragment: OpenListFragment? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        calback = context as Calback
+        openListFragment = context as OpenListFragment
     }
 
-    interface Calback {
+    interface OpenListFragment {
         fun openListFragment()
     }
 
@@ -66,8 +50,7 @@ class CatInfoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         viewModel.url = arguments?.getString(URL)
-
+        viewModel.url = arguments?.getString(URL)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,33 +59,23 @@ class CatInfoFragment : Fragment() {
         val catInfoImageView: ImageView = binding.imageView
         saveButton = binding.floatingActionButton
 
-         if(viewModel.glide==null){
-             viewModel.glide=Glide.with(requireActivity())
-                     .load(viewModel.url)
-                     .placeholder(R.drawable.ic_cat_empty)
-             }
-                 viewModel.glide?.into(catInfoImageView)
-
-
-
-
-
+        if (viewModel.glide == null) {
+            viewModel.glide = Glide.with(requireActivity())
+                .load(viewModel.url)
+                .placeholder(R.drawable.ic_cat_empty)
+        }
+        viewModel.glide?.into(catInfoImageView)
         saveButton?.setOnClickListener {
-
-           if (isPermissionGranted()) {
-
-               viewModel.url?.let {
-                   viewModel.downloadImage(it, requireContext())
-                    calback?.openListFragment()
-               }
-           }else{
-               requestPermission()
-           }
-
+            if (isPermissionGranted()) {
+                viewModel.url?.let {
+                    viewModel.downloadImage(it, requireContext())
+                    openListFragment?.openListFragment()
+                }
+            } else {
+                requestPermission()
+            }
         }
     }
-
-
 
     private fun isPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -118,6 +91,4 @@ class CatInfoFragment : Fragment() {
             CODE
         )
     }
-
-
 }

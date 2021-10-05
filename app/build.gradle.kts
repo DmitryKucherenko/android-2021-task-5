@@ -1,17 +1,15 @@
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("kotlin-kapt")
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 subprojects {
-    apply (plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         debug.set(false)
     }
-
 }
-
 
 android {
     compileSdkVersion(30)
@@ -59,24 +57,24 @@ android {
         val nav_version = "2.3.5"
         val pagingVersion = "3.0.0"
 
-        implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}")
-        implementation("androidx.navigation:navigation-fragment-ktx:${nav_version}")
-        implementation("androidx.navigation:navigation-ui-ktx:${nav_version}")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+        implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+        implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
         implementation("androidx.core:core-ktx:1.6.0")
         implementation("androidx.appcompat:appcompat:1.3.1")
         implementation("com.google.android.material:material:1.4.0")
         implementation("androidx.constraintlayout:constraintlayout:2.1.1")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-        implementation("com.squareup.retrofit2:retrofit:${retrofit_version}")
-        implementation("com.squareup.okhttp3:logging-interceptor:${okHttp_version}")
-        implementation("com.squareup.retrofit2:converter-moshi:${retrofit_version}")
-        implementation("com.squareup.moshi:moshi:${moshi_version}")
+        implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+        implementation("com.squareup.okhttp3:logging-interceptor:$okHttp_version")
+        implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+        implementation("com.squareup.moshi:moshi:$moshi_version")
         implementation("androidx.legacy:legacy-support-v4:1.0.0")
         implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-        kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshi_version}")
+        kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version")
         implementation("com.github.bumptech.glide:glide:4.12.0")
         kapt("com.github.bumptech.glide:compiler:4.12.0")
-        implementation("androidx.paging:paging-runtime-ktx:${pagingVersion}")
+        implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
     }
 }
