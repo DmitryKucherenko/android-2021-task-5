@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.fatalzero.R
 import com.fatalzero.databinding.CatInfoBinding
@@ -34,7 +35,7 @@ private const val QUALITY = 100
 private const val CODE = 100
 
 class CatInfoFragment : Fragment() {
-
+    private val viewModel: CatInfoViewModel by viewModels()
     private var url: String? = null
     private var _binding: CatInfoBinding? = null
     private val binding get() = _binding!!
@@ -65,7 +66,8 @@ class CatInfoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        url = arguments?.getString(URL)
+         viewModel.url = arguments?.getString(URL)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,90 +75,49 @@ class CatInfoFragment : Fragment() {
 
         val catInfoImageView: ImageView = binding.imageView
         saveButton = binding.floatingActionButton
-        Glide.with(requireActivity())
-            .load(url)
-            .placeholder(R.drawable.ic_cat_empty)
-            .into(catInfoImageView)
+
+         if(viewModel.glide==null){
+             viewModel.glide=Glide.with(requireActivity())
+                     .load(viewModel.url)
+                     .placeholder(R.drawable.ic_cat_empty)
+             }
+                 viewModel.glide?.into(catInfoImageView)
+
+
+
+
 
         saveButton?.setOnClickListener {
-            if (!isCallPermissionGranted()) requestCallPermissions()
-            val fileName = File(url).name
-            val folderName = FOLDER_NAME
-            CoroutineScope(Dispatchers.IO).launch {
-                if (saveImage(
-                        Glide.with(requireActivity())
-                            .asBitmap()
-                            .load(url) // sample image
-                            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
-                            .error(android.R.drawable.stat_notify_error)
-                            .submit()
-                            .get(), fileName, folderName
 
-                    ) != null
-                ) withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        requireContext(),
-                        "image $fileName saved to $folderName",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-            calback?.openListFragment()
+           if (isPermissionGranted()) {
+
+               viewModel.url?.let {
+                   viewModel.downloadImage(it, requireContext())
+                    calback?.openListFragment()
+               }
+           }else{
+               requestPermission()
+           }
+
         }
     }
 
-    private fun saveImage(
-        image: Bitmap,
-        imageFileName: String,
-        folderName: String = ""
-    ): String? {
-        var savedImagePath: String? = null
 
-        val storageDir = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                .toString() + "/" + folderName
-        )
-        var success = true
-        if (!storageDir.exists()) {
-            success = storageDir.mkdirs()
-        }
-        if (success) {
-            val imageFile = File(storageDir, imageFileName)
-            savedImagePath = imageFile.getAbsolutePath()
-            try {
-                val fOut: OutputStream = FileOutputStream(imageFile)
-                image.compress(Bitmap.CompressFormat.JPEG, QUALITY, fOut)
-                fOut.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            galleryAddPic(savedImagePath)
-        }
-        return savedImagePath
-    }
 
-    private fun galleryAddPic(imagePath: String?) {
-        imagePath?.let { path ->
-            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-            val f = File(path)
-            val contentUri: Uri = Uri.fromFile(f)
-            mediaScanIntent.data = contentUri
-            requireActivity().sendBroadcast(mediaScanIntent)
-        }
-    }
-
-    private fun isCallPermissionGranted(): Boolean {
+    private fun isPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestCallPermissions() {
+    private fun requestPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(),
             arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
             CODE
         )
     }
+
+
 }
