@@ -7,7 +7,7 @@ import android.os.Environment
 import android.widget.Toast
 
 private const val DELIMITER = "/"
-private const val MESSAGE="was downloaded to"
+private const val MESSAGE = "was downloaded to"
 
 class Utils {
     fun downloadImage(url: String, context: Context, filePath: String? = Environment.DIRECTORY_PICTURES) {
